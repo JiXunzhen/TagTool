@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IOperation.IClassOperation">
+
+	<resultMap type="Model.Class" id="resultListClass">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="language" property="language" />
+		<result column="file_id" property="file_id" />
+		<result column="content" property="content" />
+		<result column="super_id" property="super_id"/>
+		<result column="ctype" property="ctype"/>
+	</resultMap>
+	
+								<!-- basic operation -->
+	
+	<select id="getByID" parameterType="int" resultType="Model.Class">
+		select *
+		from Class where id=#{id}
+	</select>
+	<select id="getAll" resultMap="resultListClass">
+		select * from Class
+	</select>
+	
+	 <insert id="insert" parameterType="Model.Class" 
+        useGeneratedKeys="true" keyProperty="id"> 
+        insert into Class(name,language,content,file_id,super_id,ctype)  
+             values(#{name},#{language},#{content},#{file_id},#{super_id},#{ctype})
+    </insert>
+    
+    <update id="update" parameterType="Model.Class" >
+        update Class set name=#{name},language=#{language},content=#{content},file_id=#{file_id},super_id=#{super_id},ctype=#{ctype} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">
+        delete from Class where id=#{id}
+    </delete>
+    
+    							<!-- basic operation -->
+    							
+    <select id="getClassByPage" resultMap="resultListClass">
+    	select * 
+    	from Class
+    	limit #{0},#{1}
+    </select>
+</mapper>
